@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17/07/2023 07:04:58 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOs.Usuario" table="usuario" catalog="seminario_2023" optimistic-lock="version">
+        <id name="idUsuario" type="int">
+            <column name="ID_USUARIO" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="perfil" class="POJOs.Perfil" fetch="select">
+            <column name="ID_PERFIL" />
+        </many-to-one>
+        <property name="estado" type="java.lang.Boolean">
+            <column name="ESTADO" />
+        </property>
+        <property name="usuario" type="string">
+            <column name="USUARIO" length="50" />
+        </property>
+        <property name="contrasenia" type="string">
+            <column name="CONTRASENIA" length="70" />
+        </property>
+        <set name="clientesForUsuarioModifica" table="cliente" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USUARIO_MODIFICA" />
+            </key>
+            <one-to-many class="POJOs.Cliente" />
+        </set>
+        <set name="ventasForUsuarioModifica" table="venta" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USUARIO_MODIFICA" />
+            </key>
+            <one-to-many class="POJOs.Venta" />
+        </set>
+        <set name="ventasForUsuarioIngreso" table="venta" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USUARIO_INGRESO" />
+            </key>
+            <one-to-many class="POJOs.Venta" />
+        </set>
+        <set name="productosForUsuarioModifica" table="producto" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USUARIO_MODIFICA" />
+            </key>
+            <one-to-many class="POJOs.Producto" />
+        </set>
+        <set name="productosForUsuarioIngreso" table="producto" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USUARIO_INGRESO" />
+            </key>
+            <one-to-many class="POJOs.Producto" />
+        </set>
+        <set name="clientesForUsuarioIngreso" table="cliente" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USUARIO_INGRESO" not-null="true" />
+            </key>
+            <one-to-many class="POJOs.Cliente" />
+        </set>
+    </class>
+</hibernate-mapping>

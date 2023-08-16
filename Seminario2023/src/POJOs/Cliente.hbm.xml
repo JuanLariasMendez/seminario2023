@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17/07/2023 07:04:58 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOs.Cliente" table="cliente" catalog="seminario_2023" optimistic-lock="version">
+        <id name="idCliente" type="int">
+            <column name="ID_CLIENTE" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="usuarioByUsuarioModifica" class="POJOs.Usuario" fetch="select">
+            <column name="USUARIO_MODIFICA" />
+        </many-to-one>
+        <many-to-one name="usuarioByUsuarioIngreso" class="POJOs.Usuario" fetch="select">
+            <column name="USUARIO_INGRESO" not-null="true" />
+        </many-to-one>
+        <property name="estado" type="boolean">
+            <column name="ESTADO" not-null="true" />
+        </property>
+        <property name="nombre1" type="string">
+            <column name="NOMBRE_1" length="50" not-null="true" />
+        </property>
+        <property name="nombre2" type="string">
+            <column name="NOMBRE_2" length="50" />
+        </property>
+        <property name="apellido1" type="string">
+            <column name="APELLIDO_1" length="50" not-null="true" />
+        </property>
+        <property name="apellido2" type="string">
+            <column name="APELLIDO_2" length="50" />
+        </property>
+        <property name="nit" type="string">
+            <column name="NIT" length="15" not-null="true" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="DIRECCION" length="45" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="TELEFONO" length="12" />
+        </property>
+        <property name="fechaIngreso" type="timestamp">
+            <column name="FECHA_INGRESO" length="19" not-null="true" />
+        </property>
+        <property name="fechaModifica" type="timestamp">
+            <column name="FECHA_MODIFICA" length="19" />
+        </property>
+        <set name="ventas" table="venta" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_CLIENTE" />
+            </key>
+            <one-to-many class="POJOs.Venta" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -76,25 +76,25 @@ public class BeanProducto {
         }
     }
     
-//    public void anular(){
-//        FacesContext context=FacesContext.getCurrentInstance();
-//        try{
-////            unica linea que cambia con el de guardar
-//            boolean flag=CRUDs.CRUDProducto.anular(idProducto,1);
-//            if(flag){
-////                mostrar();
-////                limpiar();
+    public void anular(){
+        FacesContext context=FacesContext.getCurrentInstance();
+        try{
+//            unica linea que cambia con el de guardar
+            boolean flag=CRUDs.CRUDProducto.anular(idProducto,1);
+            if(flag){
+                mostrar(); //Actualiza la tabla
+                limpiar(); //Si no se ejecuta, las variables se quedan en la memoria, y vuelve a hacer la ejecucion, por eso se limpia de la memoria
 //                anular();
-//                context.addMessage(null, new FacesMessage("Exito","Reguistro modificado"));
-//            }else{
-//                context.addMessage(null, new FacesMessage("Exito","Revise que no los datos ingresados sean correctos"));
-//            }
-//        }catch(Exception e){
-//            context.addMessage(null, new FacesMessage("Error","Error"+e));
-//            System.out.println("error ="+e);
-//        }
-//    }
-//    
+                context.addMessage(null, new FacesMessage("Exito","Reguistro anulado"));
+            }else{
+                context.addMessage(null, new FacesMessage("Exito","Revise que no los datos ingresados sean correctos"));
+            }
+        }catch(Exception e){
+            context.addMessage(null, new FacesMessage("Error","Error"+e));
+            System.out.println("error ="+e);
+        }
+    }
+    
 //    Se extrae lo de la tabla y llena la informacion de cada insert en la tabla
     public void selecionarDatos(POJOs.Producto producto){
         setIdProducto(producto.getIdProducto());

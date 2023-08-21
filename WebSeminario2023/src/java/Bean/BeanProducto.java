@@ -19,7 +19,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @ViewScoped
-public class BeanProducto {
+public class BeanProducto{
     private Integer idProducto;
     private String nombreProducto;
     private Integer cantidad;
@@ -44,7 +44,7 @@ public class BeanProducto {
     public void insertar2(){
         FacesContext context=FacesContext.getCurrentInstance();
         try{
-            boolean flag=CRUDs.CRUDProducto.insert(nombreProducto, cantidad, precio, 1);
+            boolean flag=CRUDs.CRUDProducto.insert(getNombreProducto(), getCantidad(), getPrecio(), 1);
             if(flag){
                 mostrar();
                 limpiar();
@@ -62,7 +62,7 @@ public class BeanProducto {
         FacesContext context=FacesContext.getCurrentInstance();
         try{
 //            unica linea que cambia con el de guardar
-            boolean flag=CRUDs.CRUDProducto.update(idProducto,nombreProducto,precio,1);
+            boolean flag=CRUDs.CRUDProducto.update(getIdProducto(), getNombreProducto(), getPrecio(),1);
             if(flag){
                 mostrar();
                 limpiar();
@@ -80,14 +80,14 @@ public class BeanProducto {
         FacesContext context=FacesContext.getCurrentInstance();
         try{
 //            unica linea que cambia con el de guardar
-            boolean flag=CRUDs.CRUDProducto.anular(idProducto,1);
+            boolean flag=CRUDs.CRUDProducto.anular(getIdProducto(),1);
             if(flag){
                 mostrar(); //Actualiza la tabla
                 limpiar(); //Si no se ejecuta, las variables se quedan en la memoria, y vuelve a hacer la ejecucion, por eso se limpia de la memoria
 //                anular();
                 context.addMessage(null, new FacesMessage("Exito","Reguistro anulado"));
             }else{
-                context.addMessage(null, new FacesMessage("Exito","Revise que no los datos ingresados sean correctos"));
+                context.addMessage(null, new FacesMessage("Error","Revise que no los datos ingresados sean correctos"));
             }
         }catch(Exception e){
             context.addMessage(null, new FacesMessage("Error","Error"+e));

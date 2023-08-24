@@ -62,7 +62,7 @@ public class BeanProducto{
         FacesContext context=FacesContext.getCurrentInstance();
         try{
 //            unica linea que cambia con el de guardar
-            boolean flag=CRUDs.CRUDProducto.update(getIdProducto(), getNombreProducto(), getPrecio(),1);
+            boolean flag=CRUDs.CRUDProducto.update(getIdProducto(), getNombreProducto(), getPrecio(), 1);
             if(flag){
                 mostrar();
                 limpiar();

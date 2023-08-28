@@ -9,52 +9,57 @@
         <script type="text/javascript" src="../archivos/script.js"></script>
     </h:head>
 
-    <h:body onload="habilita('formProducto:guardar', 'formProducto:modificar')">
+    <h:body onload="habilita('formCliente:guardar', 'formCliente:modificar');foco('formCliente:primerNombre');#{beanCliente.limpiar()}">
         <!--Fromulario para ingresar datos en la BDD-->
         <h:form id="formCliente">
             <!-- <p:growl/> Muestra un mensaje emergente-->
             <p:growl id="growl" life="2000" showDetail="true"/>
             <p:panel header="Clientes">
                 <h5>Primer nombre</h5>
-                <span class="ui-float-label">
-                    <p:inputText id="primerNombre" value="#{beanCliente.nombre1}"/>
-                    <p:outputLabel for="@previous" value="Primer Nombre"/>
-                </span>
+                <p:inputText id="primerNombre" value="#{beanCliente.nombre1}" onkeypress="if (event.keyCode === 13) {
+                            foco('formCliente:segundoNombre');
+                            return false;
+                        }"/> <!-- 13= al codico ASSI del enter-->
+                
                 <h5>Segundo nombre</h5>
-                <span class="ui-float-label">
-                    <p:inputText id="segundoNombre" value="#{beanCliente.nombre2}"/>
-                    <p:outputLabel for="@previous" value="Segundo Nombre"/>
-                </span>
+                <p:inputText id="segundoNombre" value="#{beanCliente.nombre2}" onkeypress="if (event.keyCode === 13) {
+                            foco('formCliente:primerApellido');
+                            return false;
+                        }"/> <!-- 13= al codico ASSI del enter-->
+
                 <h5>Primer apellido</h5>
-                <span class="ui-float-label">
-                    <p:inputText id="primerApellido" value="#{beanCliente.apellido1}"/>
-                    <p:outputLabel for="@previous" value="Primer Apellido"/>
-                </span>
+                <p:inputText id="primerApellido" value="#{beanCliente.apellido1}" onkeypress="if (event.keyCode === 13) {
+                            foco('formCliente:segundoApellido');
+                            return false;
+                        }"/> <!-- 13= al codico ASSI del enter-->
+
                 <h5>Segundo apellido</h5>
-                <span class="ui-float-label">
-                    <p:inputText id="segundoApellido" value="#{beanCliente.apellido2}"/>
-                    <p:outputLabel for="@previous" value="Segundo APellido"/>
-                </span>
+                <p:inputText id="segundoApellido" value="#{beanCliente.apellido2}" onkeypress="if (event.keyCode === 13) {
+                            foco('formCliente:nit');
+                            return false;
+                        }"/> <!-- 13= al codico ASSI del enter-->
 
                 <h5>NIT</h5>
-                <span class="ui-float-label">
-                    <p:inputText id="nit" value="#{beanCliente.nit}"/>
-                    <p:outputLabel for="@previous" value="NIT"/>
-                </span>
+                <p:inputText id="nit" value="#{beanCliente.nit}" onkeypress="if (event.keyCode === 13) {
+                            foco('formCliente:direccion');
+                            return false;
+                        }"/> <!-- 13= al codico ASSI del enter-->
+
                 <h5>Dirección</h5>
-                <span class="ui-float-label">
-                    <p:inputText id="dirección" value="#{beanCliente.direccion}"/>
-                    <p:outputLabel for="@previous" value="Dirección"/>
-                </span>
+                <p:inputText id="direccion" value="#{beanCliente.direccion}" onkeypress="if (event.keyCode === 13) {
+                            foco('formCliente:telefono');
+                            return false;
+                        }"/> <!-- 13= al codico ASSI del enter-->
+
                 <h5>Telefono</h5>
-                <span class="ui-float-label">
-                    <p:inputText id="telefono" value="#{beanCliente.telefono}"/>
-                    <p:outputLabel for="@previous" value="Telefono"/>
-                </span>
+                <p:inputText id="telefono" value="#{beanCliente.telefono}" onkeypress="if (event.keyCode === 13) {
+                            focoBoton('formCliente:guardar', 'formCliente:modificar');
+                            return false;
+                                    }"/> <!-- 13= al codico ASSI del enter-->
 
                 <!--Botones guardar y modificar en el formulario de ingreso-->
-                <p:commandButton id="guardar" value="Guardar" update="@form,tables" styleClass="rounded-button" action ="#{beanCliente.insertar2()}" oncomplete="habilita('formCliente:guardar','formCliente:modificar'):foco('formProducto:nombreProducto')"/>
-                <p:commandButton id="modificar" value="Modificar" update="@form,tables" styleClass="rounded-button ui-button-success" action ="#{beanCliente.modificar()}" oncomplete="habilita('formCliente:modificar','formCliente:guardar')"/>
+                <p:commandButton id="guardar" value="Guardar" update="@form,tables" styleClass="rounded-button" action ="#{beanCliente.insertar2()}" oncomplete="habilita('formCliente:guardar','formCliente:modificar');foco('formCliente:primerNombre')"/>
+                <p:commandButton id="modificar" value="Modificar" update="@form,tables" styleClass="rounded-button ui-button-success" action ="#{beanCliente.modificar()}" oncomplete="habilita('formCliente:guardar','formCliente:modificar');foco('formCliente:primerNombre')"/>
                 <!--update="@form,tables" actualizar datos de las tablas-->
             </p:panel>
 
@@ -95,7 +100,7 @@
 
                     <!--Botones de moficar y anular dentro de la tabla-->
                     <p:column headerText="Modificar">
-                        <p:commandButton value="Modificar" update="formCliente" styleClass="rounded-button ui-button-success" action ="#{beanCliente.selecionarDatos(client)}" oncomplete="habilita('formClient:modificar','formClient:guardar')"/>
+                        <p:commandButton value="Modificar" update="formCliente" styleClass="rounded-button ui-button-success" action ="#{beanCliente.selecionarDatos(client)}" oncomplete="habilita('formCliente:modificar','formCliente:guardar'),foco('formCliente:primerNombre')"/>
                     </p:column>
                     <p:column headerText="Anular">
                         <p:commandButton value="Anular" update="anular" styleClass="rounded-button ui-button-danger" action ="#{beanCliente.selecionarDatos(client)}" onclick="PF('dlg2').show()"/>

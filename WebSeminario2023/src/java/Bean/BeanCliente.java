@@ -41,7 +41,9 @@ public class BeanCliente {
     
     public void limpiar(){
         setNombre1("");
+        setNombre2("");
         setApellido1("");
+        setApellido2("");
         setNit("");
         setDireccion("");
         setTelefono("");
@@ -84,9 +86,10 @@ public class BeanCliente {
     
     public void anular(){
         FacesContext context=FacesContext.getCurrentInstance();
+        //Control de excepciones
         try{
 //            unica linea que cambia con el de guardar
-            boolean flag=CRUDs.CRUDCliente.anular(idCliente,1);
+            boolean flag=CRUDs.CRUDCliente.anular(getIdCliente(),1);
             if(flag){
                 mostrar(); //Actualiza la tabla
                 limpiar(); //Si no se ejecuta, las variables se quedan en la memoria, y vuelve a hacer la ejecucion, por eso se limpia de la memoria

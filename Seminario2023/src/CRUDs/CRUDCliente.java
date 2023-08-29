@@ -71,7 +71,7 @@ public class CRUDCliente {
         return flag;
     }
     
-    public static boolean update(Integer idCliente, String nit, String direccion, String telefono, int idUsuario){
+    public static boolean update(Integer idCliente, String nombre1,String nombre2,String apellido1, String apellido2, String nit, String direccion, String telefono, int idUsuario){
         boolean flag=false;
         Date fecha = new Date();
         Session session=HibernateUtil.HibernateUtil.getSessionFactory().openSession();
@@ -84,6 +84,10 @@ public class CRUDCliente {
             //para ver si ya existe, y si sí, que lo modifique
             if(update!=null){
                 //para conocer los nuevos valores[Estados,]
+                update.setNombre1(nombre1);
+                update.setNombre2(nombre2);
+                update.setApellido1(apellido1);
+                update.setApellido2(apellido2);
                 update.setNit(nit);
                 update.setTelefono(telefono);
                 update.setDireccion(direccion);

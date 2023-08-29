@@ -70,7 +70,7 @@ public class BeanCliente {
         FacesContext context=FacesContext.getCurrentInstance();
         try{
 //            unica linea que cambia con el de guardar
-            boolean flag=CRUDs.CRUDCliente.update(getIdCliente(), getNit(), getDireccion(), getTelefono(),1);
+            boolean flag=CRUDs.CRUDCliente.update(getIdCliente(),getNombre1(),getNombre2(),getApellido1(),getApellido2(), getNit(), getDireccion(), getTelefono(),1);
             if(flag){
                 mostrar();
                 limpiar();

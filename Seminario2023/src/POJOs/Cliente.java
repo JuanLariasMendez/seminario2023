@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 17/07/2023 07:04:57 PM by Hibernate Tools 4.3.1
+// Generated 28/08/2023 06:27:19 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -12,7 +12,7 @@ import java.util.Set;
 public class Cliente  implements java.io.Serializable {
 
 
-     private int idCliente;
+     private Integer idCliente;
      private Usuario usuarioByUsuarioModifica;
      private Usuario usuarioByUsuarioIngreso;
      private boolean estado;
@@ -31,8 +31,7 @@ public class Cliente  implements java.io.Serializable {
     }
 
 	
-    public Cliente(int idCliente, Usuario usuarioByUsuarioIngreso, boolean estado, String nombre1, String apellido1, String nit, Date fechaIngreso) {
-        this.idCliente = idCliente;
+    public Cliente(Usuario usuarioByUsuarioIngreso, boolean estado, String nombre1, String apellido1, String nit, Date fechaIngreso) {
         this.usuarioByUsuarioIngreso = usuarioByUsuarioIngreso;
         this.estado = estado;
         this.nombre1 = nombre1;
@@ -40,8 +39,7 @@ public class Cliente  implements java.io.Serializable {
         this.nit = nit;
         this.fechaIngreso = fechaIngreso;
     }
-    public Cliente(int idCliente, Usuario usuarioByUsuarioModifica, Usuario usuarioByUsuarioIngreso, boolean estado, String nombre1, String nombre2, String apellido1, String apellido2, String nit, String direccion, String telefono, Date fechaIngreso, Date fechaModifica, Set<Venta> ventas) {
-       this.idCliente = idCliente;
+    public Cliente(Usuario usuarioByUsuarioModifica, Usuario usuarioByUsuarioIngreso, boolean estado, String nombre1, String nombre2, String apellido1, String apellido2, String nit, String direccion, String telefono, Date fechaIngreso, Date fechaModifica, Set<Venta> ventas) {
        this.usuarioByUsuarioModifica = usuarioByUsuarioModifica;
        this.usuarioByUsuarioIngreso = usuarioByUsuarioIngreso;
        this.estado = estado;
@@ -57,11 +55,11 @@ public class Cliente  implements java.io.Serializable {
        this.ventas = ventas;
     }
    
-    public int getIdCliente() {
+    public Integer getIdCliente() {
         return this.idCliente;
     }
     
-    public void setIdCliente(int idCliente) {
+    public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
     }
     public Usuario getUsuarioByUsuarioModifica() {

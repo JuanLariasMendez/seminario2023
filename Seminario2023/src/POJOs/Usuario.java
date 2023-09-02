@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 17/07/2023 07:04:57 PM by Hibernate Tools 4.3.1
+// Generated 28/08/2023 06:27:19 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -11,14 +11,16 @@ import java.util.Set;
 public class Usuario  implements java.io.Serializable {
 
 
-     private int idUsuario;
+     private Integer idUsuario;
      private Perfil perfil;
      private Boolean estado;
      private String usuario;
      private String contrasenia;
+     private Set<FormaPago> formaPagosForUsuarioModifica = new HashSet<FormaPago>(0);
      private Set<Cliente> clientesForUsuarioModifica = new HashSet<Cliente>(0);
      private Set<Venta> ventasForUsuarioModifica = new HashSet<Venta>(0);
      private Set<Venta> ventasForUsuarioIngreso = new HashSet<Venta>(0);
+     private Set<FormaPago> formaPagosForUsuarioIngreso = new HashSet<FormaPago>(0);
      private Set<Producto> productosForUsuarioModifica = new HashSet<Producto>(0);
      private Set<Producto> productosForUsuarioIngreso = new HashSet<Producto>(0);
      private Set<Cliente> clientesForUsuarioIngreso = new HashSet<Cliente>(0);
@@ -26,29 +28,26 @@ public class Usuario  implements java.io.Serializable {
     public Usuario() {
     }
 
-	
-    public Usuario(int idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-    public Usuario(int idUsuario, Perfil perfil, Boolean estado, String usuario, String contrasenia, Set<Cliente> clientesForUsuarioModifica, Set<Venta> ventasForUsuarioModifica, Set<Venta> ventasForUsuarioIngreso, Set<Producto> productosForUsuarioModifica, Set<Producto> productosForUsuarioIngreso, Set<Cliente> clientesForUsuarioIngreso) {
-       this.idUsuario = idUsuario;
+    public Usuario(Perfil perfil, Boolean estado, String usuario, String contrasenia, Set<FormaPago> formaPagosForUsuarioModifica, Set<Cliente> clientesForUsuarioModifica, Set<Venta> ventasForUsuarioModifica, Set<Venta> ventasForUsuarioIngreso, Set<FormaPago> formaPagosForUsuarioIngreso, Set<Producto> productosForUsuarioModifica, Set<Producto> productosForUsuarioIngreso, Set<Cliente> clientesForUsuarioIngreso) {
        this.perfil = perfil;
        this.estado = estado;
        this.usuario = usuario;
        this.contrasenia = contrasenia;
+       this.formaPagosForUsuarioModifica = formaPagosForUsuarioModifica;
        this.clientesForUsuarioModifica = clientesForUsuarioModifica;
        this.ventasForUsuarioModifica = ventasForUsuarioModifica;
        this.ventasForUsuarioIngreso = ventasForUsuarioIngreso;
+       this.formaPagosForUsuarioIngreso = formaPagosForUsuarioIngreso;
        this.productosForUsuarioModifica = productosForUsuarioModifica;
        this.productosForUsuarioIngreso = productosForUsuarioIngreso;
        this.clientesForUsuarioIngreso = clientesForUsuarioIngreso;
     }
    
-    public int getIdUsuario() {
+    public Integer getIdUsuario() {
         return this.idUsuario;
     }
     
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
     }
     public Perfil getPerfil() {
@@ -79,6 +78,13 @@ public class Usuario  implements java.io.Serializable {
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
+    public Set<FormaPago> getFormaPagosForUsuarioModifica() {
+        return this.formaPagosForUsuarioModifica;
+    }
+    
+    public void setFormaPagosForUsuarioModifica(Set<FormaPago> formaPagosForUsuarioModifica) {
+        this.formaPagosForUsuarioModifica = formaPagosForUsuarioModifica;
+    }
     public Set<Cliente> getClientesForUsuarioModifica() {
         return this.clientesForUsuarioModifica;
     }
@@ -99,6 +105,13 @@ public class Usuario  implements java.io.Serializable {
     
     public void setVentasForUsuarioIngreso(Set<Venta> ventasForUsuarioIngreso) {
         this.ventasForUsuarioIngreso = ventasForUsuarioIngreso;
+    }
+    public Set<FormaPago> getFormaPagosForUsuarioIngreso() {
+        return this.formaPagosForUsuarioIngreso;
+    }
+    
+    public void setFormaPagosForUsuarioIngreso(Set<FormaPago> formaPagosForUsuarioIngreso) {
+        this.formaPagosForUsuarioIngreso = formaPagosForUsuarioIngreso;
     }
     public Set<Producto> getProductosForUsuarioModifica() {
         return this.productosForUsuarioModifica;

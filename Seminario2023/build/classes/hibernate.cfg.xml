@@ -47,11 +47,12 @@ Contributor(s):
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">Seminar1O22023</property>
     <property name="hibernate.current_session_context_class">thread</property>
+    <mapping resource="POJOs/Producto.hbm.xml"/>
+    <mapping resource="POJOs/Venta.hbm.xml"/>
+    <mapping resource="POJOs/FormaPago.hbm.xml"/>
     <mapping resource="POJOs/Perfil.hbm.xml"/>
     <mapping resource="POJOs/Usuario.hbm.xml"/>
-    <mapping resource="POJOs/Cliente.hbm.xml"/>
-    <mapping resource="POJOs/Venta.hbm.xml"/>
     <mapping resource="POJOs/VentaDetalle.hbm.xml"/>
-    <mapping resource="POJOs/Producto.hbm.xml"/>
+    <mapping resource="POJOs/Cliente.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

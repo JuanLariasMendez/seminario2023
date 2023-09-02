@@ -20,7 +20,7 @@ public class Seminario2023 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        BigDecimal precio=new BigDecimal(10.5);
+        //BigDecimal precio=new BigDecimal(10.5);
 //----------------------------CRUD PRODUCTO-------------------------------------
 //        System.out.println("insert="+CRUDs.CRUDProducto.insert("Consome",100,precio,1));
 //        System.out.println("update="+CRUDs.CRUDProducto.update(1, "maler", precio, 1)); //IdProducto - "NombreDelProducto" - variablede arriba(precio) - Usuaurio
@@ -52,6 +52,10 @@ public class Seminario2023 {
 //              System.out.println("Nit= "+CRUDCliente.universo().get(i).getNit());
 //              System.out.println("Direccion= "+CRUDCliente.universo().get(i).getDireccion());
 //              System.out.println("Direccion= "+CRUDCliente.universo().get(i).getTelefono());
-//          }  
+//          } 
+//----------------------------CRUD VENTA DETALLE-------------------------------------
+        BigDecimal precioVD=new BigDecimal(100);
+//      System.out.println("Forma de pago"+CRUDs.CRUDVenta.insert(2,1,1));
+        System.out.println("detalle"+CRUDs.CRUDVentaDetalle.insert(3, 1, 5, precioVD));
     }
 }

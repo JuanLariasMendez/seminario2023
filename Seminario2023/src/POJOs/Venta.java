@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 17/07/2023 07:04:57 PM by Hibernate Tools 4.3.1
+// Generated 28/08/2023 06:27:19 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -12,13 +12,13 @@ import java.util.Set;
 public class Venta  implements java.io.Serializable {
 
 
-     private int idVenta;
+     private Integer idVenta;
      private Cliente cliente;
+     private FormaPago formaPago;
      private Usuario usuarioByUsuarioModifica;
      private Usuario usuarioByUsuarioIngreso;
      private Boolean estado;
      private Date fechaVenta;
-     private Integer idTipoPago;
      private Boolean estadoFinalizado;
      private Date fechaIngreso;
      private Date fechaModifica;
@@ -27,29 +27,24 @@ public class Venta  implements java.io.Serializable {
     public Venta() {
     }
 
-	
-    public Venta(int idVenta) {
-        this.idVenta = idVenta;
-    }
-    public Venta(int idVenta, Cliente cliente, Usuario usuarioByUsuarioModifica, Usuario usuarioByUsuarioIngreso, Boolean estado, Date fechaVenta, Integer idTipoPago, Boolean estadoFinalizado, Date fechaIngreso, Date fechaModifica, Set<VentaDetalle> ventaDetalles) {
-       this.idVenta = idVenta;
+    public Venta(Cliente cliente, FormaPago formaPago, Usuario usuarioByUsuarioModifica, Usuario usuarioByUsuarioIngreso, Boolean estado, Date fechaVenta, Boolean estadoFinalizado, Date fechaIngreso, Date fechaModifica, Set<VentaDetalle> ventaDetalles) {
        this.cliente = cliente;
+       this.formaPago = formaPago;
        this.usuarioByUsuarioModifica = usuarioByUsuarioModifica;
        this.usuarioByUsuarioIngreso = usuarioByUsuarioIngreso;
        this.estado = estado;
        this.fechaVenta = fechaVenta;
-       this.idTipoPago = idTipoPago;
        this.estadoFinalizado = estadoFinalizado;
        this.fechaIngreso = fechaIngreso;
        this.fechaModifica = fechaModifica;
        this.ventaDetalles = ventaDetalles;
     }
    
-    public int getIdVenta() {
+    public Integer getIdVenta() {
         return this.idVenta;
     }
     
-    public void setIdVenta(int idVenta) {
+    public void setIdVenta(Integer idVenta) {
         this.idVenta = idVenta;
     }
     public Cliente getCliente() {
@@ -58,6 +53,13 @@ public class Venta  implements java.io.Serializable {
     
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+    public FormaPago getFormaPago() {
+        return this.formaPago;
+    }
+    
+    public void setFormaPago(FormaPago formaPago) {
+        this.formaPago = formaPago;
     }
     public Usuario getUsuarioByUsuarioModifica() {
         return this.usuarioByUsuarioModifica;
@@ -86,13 +88,6 @@ public class Venta  implements java.io.Serializable {
     
     public void setFechaVenta(Date fechaVenta) {
         this.fechaVenta = fechaVenta;
-    }
-    public Integer getIdTipoPago() {
-        return this.idTipoPago;
-    }
-    
-    public void setIdTipoPago(Integer idTipoPago) {
-        this.idTipoPago = idTipoPago;
     }
     public Boolean getEstadoFinalizado() {
         return this.estadoFinalizado;

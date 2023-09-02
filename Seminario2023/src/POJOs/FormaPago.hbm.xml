@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/08/2023 06:27:19 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOs.FormaPago" table="forma_pago" catalog="seminario_2023" optimistic-lock="version">
+        <id name="idFormaPago" type="java.lang.Integer">
+            <column name="ID_FORMA_PAGO" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="usuarioByUsuarioModifica" class="POJOs.Usuario" fetch="select">
+            <column name="USUARIO_MODIFICA" />
+        </many-to-one>
+        <many-to-one name="usuarioByUsuarioIngreso" class="POJOs.Usuario" fetch="select">
+            <column name="USUARIO_INGRESO" />
+        </many-to-one>
+        <property name="estado" type="java.lang.Boolean">
+            <column name="ESTADO" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="45" />
+        </property>
+        <property name="fechaIngreso" type="timestamp">
+            <column name="FECHA_INGRESO" length="19" />
+        </property>
+        <property name="fechaModifica" type="timestamp">
+            <column name="FECHA_MODIFICA" length="19" />
+        </property>
+        <set name="ventas" table="venta" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_FORMA_PAGO" />
+            </key>
+            <one-to-many class="POJOs.Venta" />
+        </set>
+    </class>
+</hibernate-mapping>

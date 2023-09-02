@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 17/07/2023 07:04:57 PM by Hibernate Tools 4.3.1
+// Generated 28/08/2023 06:27:19 PM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -13,7 +13,7 @@ import java.util.Set;
 public class Producto  implements java.io.Serializable {
 
 
-     private int idProducto;
+     private Integer idProducto;
      private Usuario usuarioByUsuarioModifica;
      private Usuario usuarioByUsuarioIngreso;
      private Boolean estado;
@@ -23,15 +23,11 @@ public class Producto  implements java.io.Serializable {
      private Date fechaIngreso;
      private Date fechaModifica;
      private Set<VentaDetalle> ventaDetalles = new HashSet<VentaDetalle>(0);
+
     public Producto() {
     }
 
-	
-    public Producto(int idProducto) {
-        this.idProducto = idProducto;
-    }
-    public Producto(int idProducto, Usuario usuarioByUsuarioModifica, Usuario usuarioByUsuarioIngreso, Boolean estado, String nombreProducto, Integer cantidad, BigDecimal precio, Date fechaIngreso, Date fechaModifica, Set<VentaDetalle> ventaDetalles) {
-       this.idProducto = idProducto;
+    public Producto(Usuario usuarioByUsuarioModifica, Usuario usuarioByUsuarioIngreso, Boolean estado, String nombreProducto, Integer cantidad, BigDecimal precio, Date fechaIngreso, Date fechaModifica, Set<VentaDetalle> ventaDetalles) {
        this.usuarioByUsuarioModifica = usuarioByUsuarioModifica;
        this.usuarioByUsuarioIngreso = usuarioByUsuarioIngreso;
        this.estado = estado;
@@ -43,11 +39,11 @@ public class Producto  implements java.io.Serializable {
        this.ventaDetalles = ventaDetalles;
     }
    
-    public int getIdProducto() {
+    public Integer getIdProducto() {
         return this.idProducto;
     }
     
-    public void setIdProducto(int idProducto) {
+    public void setIdProducto(Integer idProducto) {
         this.idProducto = idProducto;
     }
     public Usuario getUsuarioByUsuarioModifica() {

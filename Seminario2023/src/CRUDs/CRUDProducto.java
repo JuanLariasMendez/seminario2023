@@ -167,7 +167,7 @@ public class CRUDProducto {
         return flag;
     }
     
-        //Para pedir y conocer los campos de un determinado producto
+        //Para pedir y conocer los campos de un determinado producto (Datos puntuales, como para ver si hay una operacion abierta)
         public static Producto select(Integer idProducto){
             Session session=HibernateUtil.HibernateUtil.getSessionFactory().openSession();
             Criteria criteria=session.createCriteria(Producto.class);

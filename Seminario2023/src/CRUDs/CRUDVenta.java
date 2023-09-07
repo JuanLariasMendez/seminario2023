@@ -78,4 +78,19 @@ public class CRUDVenta {
         }
         return flag;
     }
+    
+        //Para pedir y conocer los campos de un determinado producto (Datos puntuales, como para ver si hay una operacion abierta)
+        public static Venta select(Usuario usuario)/*mandamos como parametro un objeto usuario, para que si tenemos varios empleados, cada quien podra tener su control propio, de no tenerlo, unicamnete se podria trabajar uno a la vez*/{
+            Session session=HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+            Criteria criteria=session.createCriteria(Venta.class);
+            criteria.add(Restrictions.eq("EstadoFinalizado", false)); //Si el estado es finalizado pasara a true y solo avanzara si en un inicio queremos realizar una operacion y el estado esta no finalizado (abierto)
+            criteria.add(Restrictions.eq("usuarioByUsuarioIngreso", usuario));
+            Venta select=(Venta)criteria.uniqueResult();//para ejecutar las 2 lineas de codigo anterior
+            if(select==null){
+                select=new Venta();
+                select.setIdVenta(0);
+            }
+            session.close();
+            return select;
+        }  
 }

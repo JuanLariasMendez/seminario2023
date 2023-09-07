@@ -5,12 +5,15 @@
  */
 package Bean;
 
+import POJOs.Usuario;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 /**
@@ -22,6 +25,7 @@ import javax.faces.model.SelectItem;
 public class BeanVenta {
 
 
+
     private Integer IdCliente; //atraves de lista
     private Integer idFormaPago;
     private Integer idVenta;
@@ -30,34 +34,69 @@ public class BeanVenta {
     private BigDecimal monto;
     private List listaCliente;
     private List listaFormaPago;
+    private List listaProducto;
+    private boolean componentes=false;
     
     @PostConstruct // para cargar todo lo de BBD a la lista
     public void inicio(){
         llenarComboCliente();
         llenarComboFormaPago();
+        llenarComboProducto();
+    }
+    
+    public void mostrar(){
+        
     }
     
     public List<SelectItem> llenarComboCliente() {
         setListaCliente(new ArrayList<SelectItem>());
         List<POJOs.Cliente> lstCliente = CRUDs.CRUDCliente.universo();
         for (POJOs.Cliente cliente : lstCliente) {
-            SelectItem clienteItem = new SelectItem(cliente.getIdCliente(), "NIT: " + cliente.getNit() + "Nombre: " + cliente.getNombre1() + " Apellido: " + cliente.getApellido1());
+            SelectItem clienteItem = new SelectItem(cliente.getIdCliente(), cliente.getNombre1() + " " + cliente.getApellido1() +  " "+ "NIT: " + cliente.getNit());
             getListaCliente().add(clienteItem);
         }
         return getListaCliente();
     }
     
-public List<SelectItem> llenarComboFormaPago() {
-        setListaFormaPago(new ArrayList<SelectItem>());
-        List<POJOs.FormaPago> lstFormaPago = CRUDs.CRUDFormaPago.universo();
-        for (POJOs.FormaPago formaPago : lstFormaPago) {
+    public List<SelectItem> llenarComboFormaPago() {
+            setListaFormaPago(new ArrayList<SelectItem>());
+            List<POJOs.FormaPago> lstFormaPago = CRUDs.CRUDFormaPago.universo();
+            for (POJOs.FormaPago formaPago : lstFormaPago) {
 
-            SelectItem FormaPagoItem = new SelectItem(formaPago.getIdFormaPago(), formaPago.getDescripcion());
-            getListaFormaPago().add(FormaPagoItem);
+                SelectItem FormaPagoItem = new SelectItem(formaPago.getIdFormaPago(), formaPago.getDescripcion());
+                getListaFormaPago().add(FormaPagoItem);
+            }
+            return getListaFormaPago();
         }
-        return getListaCliente();
+    
+    public List<SelectItem> llenarComboProducto() {
+        setListaProducto(new ArrayList<SelectItem>());
+        List<POJOs.Producto> lstProducto = CRUDs.CRUDProducto.universo();
+        for (POJOs.Producto producto : lstProducto) {
+
+            SelectItem ProductoItem = new SelectItem(producto.getIdProducto(), producto.getNombreProducto());
+            getListaProducto().add(ProductoItem);
+        }
+        return getListaProducto();
     }
     
+        public void insertar(){
+        FacesContext context=FacesContext.getCurrentInstance();
+        try{
+            Usuario usuario = new Usuario();
+            usuario.setIdUsuario(1);
+            boolean flag=CRUDs.CRUDVenta.insert(IdCliente, idFormaPago, 1);
+            if(flag){
+                componentes=true; //desabilitado falso (bloqueado)
+                context.addMessage(null, new FacesMessage("Exito","Reguistro ingresado"));
+            }else{
+                context.addMessage(null, new FacesMessage("Exito","Revise que no haya sido ingresado antes"));
+            }
+        }catch(Exception e){
+            context.addMessage(null, new FacesMessage("Error","Error"+e));
+            System.out.println("error ="+e);
+        }
+    }
     
     
     //------Setter's y Getter's------
@@ -173,5 +212,35 @@ public List<SelectItem> llenarComboFormaPago() {
     public void setListaFormaPago(List listaFormaPago) {
         this.listaFormaPago = listaFormaPago;
     }
+    
+    
+    /**
+     * @return the listaProducto
+     */
+    public List getListaProducto() {
+        return listaProducto;
+    }
+
+    /**
+     * @param listaProducto the listaProducto to set
+     */
+    public void setListaProducto(List listaProducto) {
+        this.listaProducto = listaProducto;
+    }
+
+        /**
+     * @return the componentes
+     */
+    public boolean isComponentes() {
+        return componentes;
+    }
+
+    /**
+     * @param componentes the componentes to set
+     */
+    public void setComponentes(boolean componentes) {
+        this.componentes = componentes;
+    }
+
 
 }

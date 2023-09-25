@@ -10,11 +10,13 @@ import POJOs.Venta;
 import POJOs.VentaDetalle;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -26,6 +28,32 @@ import org.hibernate.criterion.Restrictions;
  */
 
 public class CRUDVentaDetalle {
+        
+    //Select * from (Where)
+    public static List<VentaDetalle> universo(Integer idVenta){
+        Session session = HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession(/*Solo para ver si la session ya esta abierta*/);
+        List<VentaDetalle>lista=null;
+        try{
+            session.beginTransaction();
+            Criteria criteria=session.createCriteria(VentaDetalle.class);//La tabla que vamos a utilizar
+            criteria.createAlias("venta", "v");
+            criteria.createAlias("producto", "p");
+            criteria.add(Restrictions.eq("v.idVenta",idVenta));//Para que unicamente liste las ventas que se estan manejenado, de lo contrario listaria todas las ventas existentes
+            criteria.addOrder(Order.desc("idVentaDetalle")/*where*/);//Que muestre todos los estados activos de la tabla productos
+            //criteria.addOrder(Order.desc("idProducto"));//Para ordenar en desendete o ascendente[Se recomienda ascendente para ver el ultimo ingresado]
+            criteria.setMaxResults(500);//Se puede agregar un limite en las busquedas, para ser mas precisos y que el sistema sea menos lento
+            lista=criteria.list();
+        }catch(HibernateException e){
+            System.out.println("Error="+e);//Esta para ver cuales son los errores de logica
+        }finally{
+            session.getTransaction().commit();//Esto es lo que hace que las sessiones sin filalizar se cierren automaticamente
+        }
+        return lista;
+              
+    }
+    
+    
+    
     //Toma de las llave foranea IDVenta, idProducto
     //metodo Estatico
     public static boolean insert(Integer idVenta,Integer idProducto, Integer cantidad, BigDecimal monto){
@@ -68,6 +96,32 @@ public class CRUDVentaDetalle {
             System.out.print("Error="+e);
         }finally{
            session.close();             
+        }
+        return flag;
+    }
+    
+        //metodo eliminar
+        public static boolean eliminar(Integer idVentaDetalle){
+        boolean flag=false;
+        Date fecha = new Date();
+        Session session=HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria=session.createCriteria(VentaDetalle.class);
+        criteria.add(Restrictions.eq("idVentaDetalle",idVentaDetalle));
+        VentaDetalle update=(VentaDetalle)criteria.uniqueResult();//ejecuta el codigo
+        Transaction transaction=null;
+        try{
+            transaction=session.beginTransaction();
+            //para ver si ya existe, y si sí, que lo modifique
+            if(update!=null){
+                session.delete(update);//Esta es la linea de codigo para hacer que el codigo borre una fila entera, el resto queda igual al metodo anular
+                flag=true;
+            }
+            transaction.commit();
+        }catch(Exception e){
+            transaction.rollback();//en caso que la transaccion no se complete por alguna razon, se hace un rollback
+            System.out.println("Error: "+e);
+        }finally{
+            session.close();
         }
         return flag;
     }

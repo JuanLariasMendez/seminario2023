@@ -35,19 +35,36 @@ public class BeanVenta {
     private List listaCliente;
     private List listaFormaPago;
     private List listaProducto;
+    private List listaVentaDelle;
     private boolean componentes=false;
     
-    @PostConstruct // para cargar todo lo de BBD a la lista
+    @PostConstruct // para cargar todo lo de BBD a la lista (para que inicie cuando abre la pagina/para que lea que tiene en la lista)
     public void inicio(){
         llenarComboCliente();
         llenarComboFormaPago();
         llenarComboProducto();
+        mostrar();//cuando abra va a tener que llenarse donde se selecciono
+    }
+    
+    public void mostrarDetalle(){
+        setListaVentaDelle(CRUDs.CRUDVentaDetalle.universo(idVenta));
     }
     
     public void mostrar(){
-        
+        //Suponiendo que hay un estado abierto
+        Usuario usuario= new Usuario();
+        usuario.setIdUsuario(1);
+        idVenta=CRUDs.CRUDVenta.select(usuario).getIdVenta();//Mira si hay una venta abierta
+        if(idVenta!=0){ //Y si hay algo abierto, entonces nos lo listara en la parte inferior
+            IdCliente=CRUDs.CRUDVenta.select(usuario).getCliente().getIdCliente();
+            idFormaPago=CRUDs.CRUDVenta.select(usuario).getFormaPago().getIdFormaPago();
+            componentes=true;
+            mostrarDetalle();
+        }
+        else{
+            componentes=false;
+        }
     }
-    
     public List<SelectItem> llenarComboCliente() {
         setListaCliente(new ArrayList<SelectItem>());
         List<POJOs.Cliente> lstCliente = CRUDs.CRUDCliente.universo();
@@ -97,6 +114,54 @@ public class BeanVenta {
             System.out.println("error ="+e);
         }
     }
+        
+        public void insertarDetalle(){
+        FacesContext context=FacesContext.getCurrentInstance();
+        try{
+            boolean flag=CRUDs.CRUDVentaDetalle.insert(idVenta,idProducto,cantidad,monto);
+            if(flag){
+                limpiarDetalle();
+                mostrarDetalle();
+                context.addMessage(null, new FacesMessage("Exito","Reguistro ingresado"));
+            }else{
+                context.addMessage(null, new FacesMessage("Exito","Revise que no haya sido ingresado antes"));
+            }
+        }catch(Exception e){
+            context.addMessage(null, new FacesMessage("Error","Error"+e));
+            System.out.println("error ="+e);
+        }
+    }
+        
+    public void limpiarDetalle(){
+        setIdProducto(null);
+        setCantidad(null);
+        setMonto(null);
+    }
+        
+            
+//    Se extrae lo de la tabla y llena la informacion de cada insert en la tabla
+    public void selecionarDatos(POJOs.VentaDetalle VentaDetalle){
+        FacesContext context=FacesContext.getCurrentInstance();
+        CRUDs.CRUDVentaDetalle.eliminar(VentaDetalle.getIdVentaDetalle());
+        mostrarDetalle();
+            try{
+            //System.out.println("id detalle="+VentaDetalle.getIdVentaDetalle());
+            boolean flag=CRUDs.CRUDVentaDetalle.eliminar(VentaDetalle.getIdVentaDetalle());
+            if(flag){
+                mostrarDetalle(); //Actualiza la tabla
+                limpiarDetalle();
+                context.addMessage(null, new FacesMessage("Exito","Reguistro eliminado"));
+            }else{
+                context.addMessage(null, new FacesMessage("Error","Error, no se elimino el reguistro"));
+            }
+ 
+        }catch(Exception e){
+            context.addMessage(null, new FacesMessage("Error","Error"+e));
+            System.out.println("error ="+e);
+        }
+    }
+    
+
     
     
     //------Setter's y Getter's------
@@ -240,6 +305,20 @@ public class BeanVenta {
      */
     public void setComponentes(boolean componentes) {
         this.componentes = componentes;
+    }
+
+    /**
+     * @return the listaVentaDelle
+     */
+    public List getListaVentaDelle() {
+        return listaVentaDelle;
+    }
+
+    /**
+     * @param listaVentaDelle the listaVentaDelle to set
+     */
+    public void setListaVentaDelle(List listaVentaDelle) {
+        this.listaVentaDelle = listaVentaDelle;
     }
 
 

@@ -19,7 +19,7 @@ public class Seminario2023 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+
         //BigDecimal precio=new BigDecimal(10.5);
 //----------------------------CRUD PRODUCTO-------------------------------------
 //        System.out.println("insert="+CRUDs.CRUDProducto.insert("Consome",100,precio,1));

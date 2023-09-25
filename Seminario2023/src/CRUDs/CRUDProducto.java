@@ -41,11 +41,15 @@ public class CRUDProducto {
                 insert.setNombreProducto(nombre);
                 insert.setCantidad(cantidad);
                 insert.setPrecio(precio);
+                
                 Usuario usuario2=new Usuario();
                 usuario2.setIdUsuario(usuario);
                 insert.setUsuarioByUsuarioIngreso(usuario2);
+                
                 insert.setFechaIngreso(fecha);
+                
                 session.save(insert);
+                
                 flag=true;
             }
             transaction.commit();

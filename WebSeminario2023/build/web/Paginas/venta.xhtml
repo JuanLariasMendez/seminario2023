@@ -38,7 +38,7 @@ and open the template in the editor.
                         <f:selectItems value="#{beanVenta.listaFormaPago}"/>    
                     </p:selectOneMenu>
 
-                <p:commandButton disabled="#{beanVenta.componentes}" id="guardar" value="Guardar" update="@form" styleClass="rounded-button ui-button-success" action="#{beanVenta.insertar()}"  />                </p:panelGrid>
+                    <p:commandButton disabled="#{beanVenta.componentes}" id="guardar" value="Guardar" update="@form" styleClass="rounded-button ui-button-success" action="#{beanVenta.insertar()}"  />                </p:panelGrid>
             </p:panel>
         </h:form>
 
@@ -47,21 +47,33 @@ and open the template in the editor.
             <p:growl id="growl" life="2000" showDetail="true"/>
             <p:panel header="Detalle de la Venta">
                 <!--            idProducto se va a guardar en: -->
-                    <p:selectOneMenu id="idProducto" value="#{beanVenta.idProducto}" 
-                                     panelStyle="width:180px"
-                                     filter="true" filterNormalize="true">
+                <p:selectOneMenu id="idProducto" value="#{beanVenta.idProducto}" 
+                                 panelStyle="width:180px"
+                                 filter="true" filterNormalize="true">
 
-                        <f:selectItem itemLabel="Seleccione un Producto" itemValue=""/>    
-                        <f:selectItems value="#{beanVenta.listaProducto}"/>    
-                    </p:selectOneMenu>
+                    <f:selectItem itemLabel="Seleccione un Producto" itemValue=""/>    
+                    <f:selectItems value="#{beanVenta.listaProducto}"/>    
 
-                <h5>Cantidad</h5>
-                    <p:inputText id="cantidad" value="#{beanVenta.cantidad}"/>
+                    <f:ajax listener="#{beanVenta.precio()}" render="monto"/>  <!--El render es lo que actualiza el textbox de monto automanticamente-->
+                </p:selectOneMenu>
                 <br></br>
                 <br></br>
+
+                <label for="usr">Cantidad</label>
+                <br></br>
+                <br></br>
+                <h:inputText id="cantidad" styleClass="cantidad" class="form-control" value="#{beanVenta.cantidad}"  onkeypress="if (event.keyCode === 13) {#{beanVenta.montoTotal()};
+                            return false;}">
+                    <p:ajax event="keyup" update=":formDetalle:montoTotal" listener="#{beanVenta.montoTotal()}" />
+                </h:inputText>
 
                 <h5>Monto</h5>
-                    <p:inputText id="monto" value="#{beanVenta.monto}"/>
+                <p:inputText id="monto" value="#{beanVenta.monto}" disabled="true"/>
+                <br></br>
+                <br></br>
+
+                <h5>Monto Total</h5>
+                <p:inputText id="montoTotal" value="#{beanVenta.montoTotal}" disabled="true"/>
                 <br></br>
                 <br></br>
 
@@ -73,8 +85,8 @@ and open the template in the editor.
         <h:form id="formTabla">
             <p:panel header="Detalle de Productos">
                 <div class="card">
-                    <p:dataTable var="product" value="#{beanVenta.limpiarDetalle()}" paginator="true" rows="5" rowsPerPageTemplate="5,10,15">
-                        
+                    <p:dataTable var="product" value="#{beanVenta.listaVentaDelle}" paginator="true" rows="5" rowsPerPageTemplate="5,10,15">
+
                         <p:column headerText="Nombre Producto" sortBy="#{product.producto.nombreProducto}" filterBy="#{product.producto.nombreProducto}">
                             <h:outputText value="#{product.producto.nombreProducto}" />
                         </p:column>
@@ -87,10 +99,14 @@ and open the template in the editor.
                             <h:outputText value="#{product.monto}" />
                         </p:column>
 
+<!--                        <p:column headerText="Eliminar">
+                            <p:commandButton value="Eliminar"  update="table, formDetalle" styleClass="rounded-button" onclick="PF('dlg2').show()" actionListener="#{beanVenta.seleccionarDatos(product)}"  />
+                        </p:column>-->
+
                     </p:dataTable>
                 </div>
             </p:panel>
         </h:form>
-        
+
     </h:body>
 </html>

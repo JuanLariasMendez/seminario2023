@@ -9,11 +9,13 @@ import POJOs.Producto;
 import POJOs.Venta;
 import POJOs.VentaDetalle;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
@@ -125,4 +127,15 @@ public class CRUDVentaDetalle {
         }
         return flag;
     }
+        
+        
+        public static List<VentaDetalle> selectMontoTotal(Integer idVenta) throws ParseException {
+        Session session = HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query query = session.createSQLQuery("call procedimientoTotal(" + idVenta + ");");
+        List<VentaDetalle> listDatos = query.list();
+        session.getTransaction().commit();
+        return listDatos;
+    }
+
 }

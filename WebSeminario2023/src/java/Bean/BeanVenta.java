@@ -30,13 +30,14 @@ public class BeanVenta {
     private Integer idFormaPago;
     private Integer idVenta;
     private Integer idProducto; //atraves de lista
-    private Integer cantidad;
-    private BigDecimal monto;
+    private Integer cantidad=0; //para evitar un nullPointerException al momento de multiplicar la cantidad x el monto
+    private BigDecimal monto=new BigDecimal(0); //para evitar un nullPointerException al momento de multiplicar la cantidad x el monto
     private List listaCliente;
     private List listaFormaPago;
     private List listaProducto;
     private List listaVentaDelle;
     private boolean componentes=false;
+    private BigDecimal montoTotal;
     
     @PostConstruct // para cargar todo lo de BBD a la lista (para que inicie cuando abre la pagina/para que lea que tiene en la lista)
     public void inicio(){
@@ -49,6 +50,19 @@ public class BeanVenta {
     public void mostrarDetalle(){
         setListaVentaDelle(CRUDs.CRUDVentaDetalle.universo(idVenta));
     }
+    
+    public void precio(){
+        //System.out.println("precio: "+CRUDs.CRUDProducto.select(idProducto).getPrecio()); //Linea de códugo provisional, unicamente para ver en consola si se esta mostrando
+        setMonto(CRUDs.CRUDProducto.select(idProducto).getPrecio());
+        
+    }
+    
+    public void montoTotal(){
+        BigDecimal cant = new BigDecimal(cantidad); //conversion de Integer a BigDecimal
+        setMontoTotal(monto.multiply(cant));
+    }
+    
+    
     
     public void mostrar(){
         //Suponiendo que hay un estado abierto
@@ -118,10 +132,12 @@ public class BeanVenta {
         public void insertarDetalle(){
         FacesContext context=FacesContext.getCurrentInstance();
         try{
+            System.out.println("id producto+" + idProducto + " cantidad=" + cantidad + " monto=" + monto);
             boolean flag=CRUDs.CRUDVentaDetalle.insert(idVenta,idProducto,cantidad,monto);
             if(flag){
                 limpiarDetalle();
                 mostrarDetalle();
+                componentes=true;
                 context.addMessage(null, new FacesMessage("Exito","Reguistro ingresado"));
             }else{
                 context.addMessage(null, new FacesMessage("Exito","Revise que no haya sido ingresado antes"));
@@ -319,6 +335,20 @@ public class BeanVenta {
      */
     public void setListaVentaDelle(List listaVentaDelle) {
         this.listaVentaDelle = listaVentaDelle;
+    }
+
+    /**
+     * @return the montoTotal
+     */
+    public BigDecimal getMontoTotal() {
+        return montoTotal;
+    }
+
+    /**
+     * @param montoTotal the montoTotal to set
+     */
+    public void setMontoTotal(BigDecimal montoTotal) {
+        this.montoTotal = montoTotal;
     }
 
 

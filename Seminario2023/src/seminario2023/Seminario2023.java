@@ -8,6 +8,12 @@ package seminario2023;
 import CRUDs.CRUDCliente;
 import CRUDs.CRUDProducto;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.util.Iterator;
+import java.util.logging.Level;
+import javassist.bytecode.stackmap.BasicBlock;
+import org.jboss.logging.Logger;
+import sun.util.logging.PlatformLogger;
 
 /**
  *
@@ -57,5 +63,26 @@ public class Seminario2023 {
         BigDecimal precioVD=new BigDecimal(100);
 //      System.out.println("Forma de pago"+CRUDs.CRUDVenta.insert(2,1,1));
         System.out.println("detalle"+CRUDs.CRUDVentaDetalle.insert(3, 1, 5, precioVD));
-    }
+        
+        //Prueba del call a la bdd
+//        for (Iterator it = CRUDs.CRUDVentaDetalle.selectMontoTotal(4).iterator(); it.hasNext();) {
+//                BigDecimal item = (BigDecimal) it.next();
+//                System.out.println("El monto total es: ");
+//                //tot = (BigDecimal) item[1];
+//            }
+//             }catch(ParseException){
+//                 Logger.getLogger(Seminario2023.class.getName()).log(Level.SEVERE,null,ex);
+//             }
+             
+//        try {
+//            for (Iterator it = CRUDs.CRUDVentaDetalle.selectMontoTotal(4).iterator(); it.hasNext();) {
+//                BigDecimal item = (BigDecimal) it.next();
+//                System.out.println("Monto: " + item);
+//
+//            }
+//
+//        } catch (ParseException ex) {
+//            Logger.getLogger(Seminario2023.class.getName()).log(Level.SEVERE,null, ex);
+//        }
+    }     
 }

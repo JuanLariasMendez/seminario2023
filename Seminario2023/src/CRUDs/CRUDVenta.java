@@ -79,7 +79,7 @@ public class CRUDVenta {
         return flag;
     }
     
-        //Para pedir y conocer los campos de un determinado producto (Datos puntuales, como para ver si hay una operacion abierta)
+       //Para pedir y conocer los campos de un determinado producto (Datos puntuales, como para ver si hay una operacion abierta)
         public static Venta select(Usuario usuario)/*mandamos como parametro un objeto usuario, para que si tenemos varios empleados, cada quien podra tener su control propio, de no tenerlo, unicamnete se podria trabajar uno a la vez*/{
             Session session=HibernateUtil.HibernateUtil.getSessionFactory().openSession();
             Criteria criteria=session.createCriteria(Venta.class);

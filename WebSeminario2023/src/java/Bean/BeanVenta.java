@@ -7,14 +7,19 @@ package Bean;
 
 import POJOs.Usuario;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import seminario2023.Seminario2023;
 
 /**
  *
@@ -23,6 +28,20 @@ import javax.faces.model.SelectItem;
 @ManagedBean
 @ViewScoped
 public class BeanVenta {
+
+    /**
+     * @return the totalFactura
+     */
+    public BigDecimal getTotalFactura() {
+        return totalFactura;
+    }
+
+    /**
+     * @param totalFactura the totalFactura to set
+     */
+    public void setTotalFactura(BigDecimal totalFactura) {
+        this.totalFactura = totalFactura;
+    }
 
 
 
@@ -38,16 +57,20 @@ public class BeanVenta {
     private List listaVentaDelle;
     private boolean componentes=false;
     private BigDecimal montoTotal;
+    private BigDecimal totalFactura;
+    
     
     @PostConstruct // para cargar todo lo de BBD a la lista (para que inicie cuando abre la pagina/para que lea que tiene en la lista)
     public void inicio(){
         llenarComboCliente();
         llenarComboFormaPago();
         llenarComboProducto();
+        mostrarDetalle();
         mostrar();//cuando abra va a tener que llenarse donde se selecciono
     }
     
     public void mostrarDetalle(){
+        totalVenta();
         setListaVentaDelle(CRUDs.CRUDVentaDetalle.universo(idVenta));
     }
     
@@ -175,6 +198,19 @@ public class BeanVenta {
             context.addMessage(null, new FacesMessage("Error","Error"+e));
             System.out.println("error ="+e);
         }
+    }
+    
+    
+    public void totalVenta(){
+         try {
+            for (Iterator it = CRUDs.CRUDVentaDetalle.selectMontoTotal(idVenta).iterator(); it.hasNext();) {
+                BigDecimal item = (BigDecimal) it.next();
+                setTotalFactura(item);
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(Seminario2023.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
     
 
